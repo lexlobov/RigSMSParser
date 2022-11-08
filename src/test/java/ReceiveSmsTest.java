@@ -10,6 +10,7 @@ public class ReceiveSmsTest {
     public void receiveSmsTest(){
         ReceiveSmsParser parser = new ReceiveSmsParser();
         String smsCode = parser.getLastSmsCode(testedNumber);
+        System.out.println(parser);
         assertEquals(smsCode.equals("null"), false);
     }
 }
