@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -10,9 +11,11 @@ import java.util.List;
 
 public class ReceiveSmsParser {
 
+    @Expose
     private String smsCode;
+    @Expose
     private boolean isSuccess;
-    private final String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
+    private transient final String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
 
     public String linkBuilder(String phoneNumber) {
         return baseUrl + phoneNumber.replaceAll("\\s", "").replaceAll("[-()+]", "");
