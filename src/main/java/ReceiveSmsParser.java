@@ -14,19 +14,18 @@ public class ReceiveSmsParser {
     @Expose
     private String smsCode;
     @Expose
-    private boolean isSuccess;
-    private transient final String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
+    private boolean success;
 
     public String linkBuilder(String phoneNumber) {
+        String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
         return baseUrl + phoneNumber.replaceAll("\\s", "").replaceAll("[-()+]", "");
     }
 
     public String getLastSmsCode(String phoneNumber) {
 
         Gson gson = new Gson();
-        String json;
-
         WebDriver driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true)); //new FirefoxOptions().setHeadless(true)
+
         try {
             driver.get(linkBuilder(phoneNumber));
             List<WebElement> messages = driver.findElements(By.xpath("//div[@class='col-xs-12 col-md-8']"));
@@ -42,13 +41,11 @@ public class ReceiveSmsParser {
         }
 
         if("null".equals(smsCode)){
-            isSuccess = false;
-            json = gson.toJson(new ReceiveSmsParser().withSmsCode(null).withSuccess(isSuccess));
-            return json;
+            success = false;
+            return gson.toJson(new ReceiveSmsParser().withSmsCode(null).withSuccess(success));
         } else {
-            isSuccess = true;
-            json = gson.toJson(new ReceiveSmsParser().withSmsCode(smsCode).withSuccess(isSuccess));
-            return json;
+            success = true;
+            return gson.toJson(new ReceiveSmsParser().withSmsCode(smsCode).withSuccess(success));
         }
     }
 
@@ -58,7 +55,7 @@ public class ReceiveSmsParser {
     }
 
     public ReceiveSmsParser withSuccess(boolean success) {
-        this.isSuccess = success;
+        this.success = success;
         return this;
     }
 
@@ -67,14 +64,14 @@ public class ReceiveSmsParser {
     }
 
     public boolean isSuccess() {
-        return isSuccess;
+        return success;
     }
 
     @Override
     public String toString() {
         return "ReceiveSmsParser{" +
                 "smsCode='" + smsCode + '\'' +
-                ", isSuccess=" + isSuccess +
+                ", isSuccess=" + success +
                 '}';
     }
 }
