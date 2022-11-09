@@ -33,9 +33,9 @@ public class ReceiveSmsParser {
                     .filter(m -> m.getAttribute("innerText").contains("web-app.testing.bigrig.app.")).findFirst()
                     .map(m -> m.findElement(By.xpath("span")).getAttribute("data-clipboard-text"))
                     .orElse("null");
-            driver.quit();
         } catch (WebDriverException e){
             e.printStackTrace();
+            driver.quit();
             System.out.println("Need vpn or proxy to connect from Russia");
             return gson.toJson(new ReceiveSmsParser().withSmsCode(null).withSuccess(false));
         }
