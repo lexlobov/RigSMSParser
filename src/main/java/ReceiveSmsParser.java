@@ -9,6 +9,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ReceiveSmsParser {
@@ -19,7 +20,7 @@ public class ReceiveSmsParser {
     private boolean success;
 
     Gson gson = new Gson();
-    WebDriver driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true)); //new FirefoxOptions().setHeadless(true)
+    WebDriver driver = new FirefoxDriver(); //new FirefoxOptions().setHeadless(true)
 
     public String linkBuilder(String phoneNumber) {
         String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
@@ -51,39 +52,20 @@ public class ReceiveSmsParser {
         }
     }
 
-    public List<WebElement> getRowsInOrder(String phoneNumber) {//String phoneNumber
-        List<WebElement> rows = new ArrayList<>();
+    public Optional<String> getLastSmsCodeForMobile(String phoneNumber) {
         try {
             driver.get(linkBuilder(phoneNumber));
-            rows = driver.findElements(By.xpath("//div[contains(@class, 'row') and contains(@class, 'table-hover')]"));
-        } catch (WebDriverException e){
+            return driver.findElements(By.xpath("//div[contains(@class, 'row') and contains(@class, 'table-hover')]")).stream()
+                    .map(WebElement::getText)
+                    .filter(data -> data.contains("44398**"))
+                    .map(data -> data.split("\n")[2].split("\\s+")[0])
+                    .findAny();
+        } catch (WebDriverException e) {
             e.printStackTrace();
+        } finally {
             driver.quit();
-            System.out.println("Need vpn or proxy to connect from Russia");
         }
-        driver.quit();
-        return rows;
-    }
-
-    public String getLastSmsCodeForMobile(String phoneNumber){
-        List<WebElement> rows = getRowsInOrder(phoneNumber);
-        if(!(rows.isEmpty())){
-            try {
-                smsCode = rows.stream()
-                        .filter(e->e.findElement(By.xpath("/div/div[contains(@class, 'mobile_hide')]")).getText().contains("44398**")).collect(Collectors.toList())
-                        .stream()
-                        .map(e->e.findElement(By.xpath("//span")).getAttribute("data-clipboard-text")).findFirst().orElse("null");
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        if ("null".equals(smsCode)) {
-            success = false;
-            return gson.toJson(new ReceiveSmsParser().withSmsCode(null).withSuccess(success));
-        } else {
-            success = true;
-            return gson.toJson(new ReceiveSmsParser().withSmsCode(smsCode).withSuccess(success));
-        }
+        return Optional.empty();
     }
 
     public ReceiveSmsParser withSmsCode(String smsCode) {
