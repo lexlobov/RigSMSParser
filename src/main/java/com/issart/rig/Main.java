@@ -1,6 +1,6 @@
 package com.issart.rig;
 
-import com.issart.rig.parsers.HttpParser;
+import com.issart.rig.parsers.HttpMobileParser;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -11,10 +11,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        HttpParser parser = new HttpParser();
-        //String jsonResult = parser.getSmsForMobile(args[0]);
-        String jsonResult = parser.getSmsForMobile("+17602781253");
-        String phone = "+17602781253";
+        HttpMobileParser parser = new HttpMobileParser();
+        String jsonResult = parser.getSmsForMobile(args[0]);
+        //String jsonResult = parser.getSmsForMobile("+17602781253");
         File file = new File("sms.json");
         try(Writer writer = new FileWriter(file)) {
             writer.write(jsonResult);
