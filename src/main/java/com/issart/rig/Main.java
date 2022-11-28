@@ -21,14 +21,4 @@ public class Main {
 
 
     }
-
-//    public void run(){
-//        ReceiveForMobile parser = new ReceiveForMobile();
-//        String jsonResult = parser.getLastSmsCodeMobile(args[0]);
-////        String jsonResult = parser.getLastSmsCodeMobile("+17602781253");
-//        File file = new File("sms.json");
-//        try(Writer writer = new FileWriter(file)) {
-//            writer.write(jsonResult);
-//        }
-//    }
 }
