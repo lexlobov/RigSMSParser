@@ -8,13 +8,16 @@ import org.jsoup.nodes.Element;
 import java.io.IOException;
 import java.util.List;
 
-public class HttpWebParser extends Parser {
+public class HttpStripeParser extends Parser{
 
-    public HttpWebParser(String phone) {
+
+    public HttpStripeParser(String phone) {
         super(phone);
     }
+
     @Override
     public String getCode() throws IOException {
+
         String html = getHtml(phone);
         if (html.equals("false")){
             System.out.println("Request wasn't successful");
@@ -24,9 +27,10 @@ public class HttpWebParser extends Parser {
         List<Element> rows = doc.selectXpath("//div[@class='col-xs-12 col-md-8']");
 
         String code = rows.stream()
-                    .filter(m -> m.text().contains("web-app.testing.bigrig.app.")).findFirst()
-                    .map(m -> m.selectXpath("span").attr("data-clipboard-text"))
-                    .orElse(null);
+                .filter(m -> m.text().contains("Your Stripe verification code is")).findFirst()
+                .map(m -> m.selectXpath("span").attr("data-clipboard-text"))
+                .orElse(null);
+        System.out.println(code);
         return new SmsCodeResult(code !=null, code).toString();
     }
 }
