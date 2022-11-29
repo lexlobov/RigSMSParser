@@ -21,7 +21,7 @@ public class Parser {
             Request request = new Request.Builder()
                     .url(linkBuilder(phone))
                     .method("GET", null)
-                    .addHeader("Cookie", "SMSSId=aRTlVW5zgg5FMWXwUSH626h6TSsT8RF%2BE07297KzGjr41UVZ3CzcaXMfLanj8Jsg7yZ1gmpCsoa9zs%2BzNAHGjT5PjA")
+                    //.addHeader("Cookie", "SMSSId=aRTlVW5zgg5FMWXwUSH626h6TSsT8RF%2BE07297KzGjr41UVZ3CzcaXMfLanj8Jsg7yZ1gmpCsoa9zs%2BzNAHGjT5PjA")
                     .build();
             response = client.newCall(request).execute();
         } catch (Exception e){
