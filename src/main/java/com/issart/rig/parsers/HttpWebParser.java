@@ -18,9 +18,7 @@ public class HttpWebParser extends Parser {
         }
         Document doc = Jsoup.parse(html);
         List<Element> rows = doc.selectXpath("//div[@class='col-xs-12 col-md-8']");
-        for (Element row: rows) {
-            System.out.println(row.text());
-        }
+
         String code = rows.stream()
                     .filter(m -> m.text().contains("web-app.testing.bigrig.app.")).findFirst()
                     .map(m -> m.selectXpath("span").attr("data-clipboard-text"))
