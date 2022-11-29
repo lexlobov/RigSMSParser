@@ -29,7 +29,7 @@ public class HttpMobileParser extends Parser {
                 break;
             }
         }
-        if(code.equals(null)) System.out.println("Code wasn't found on page :<");
+        if(code == null) System.out.println("Code wasn't found on page :<");
         return new SmsCodeResult(code != null, code).toString();
     }
 
