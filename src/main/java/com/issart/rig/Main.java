@@ -13,8 +13,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
-            if (args[1].equals("stripe")) getCode(new HttpMobileParser(args[0]));
-            else if (args[1].equals("rig")) getCode(new HttpStripeParser(args[0]));
+            if (args[1].equals("stripe")) getCode(new HttpStripeParser(args[0]));
+            else if (args[1].equals("rig")) getCode(new HttpMobileParser(args[0]));
             else getCode(new HttpMobileParser(args[0]));
         } catch (IndexOutOfBoundsException e){
             try {
