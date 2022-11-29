@@ -11,7 +11,12 @@ import java.util.List;
 public class HttpStripeParser extends Parser{
 
 
-    public String getStripeCode(String phone) throws IOException {
+    public HttpStripeParser(String phone) {
+        super(phone);
+    }
+
+    @Override
+    public String getCode() throws IOException {
 
         String html = getHtml(phone);
         if (html.equals("false")){

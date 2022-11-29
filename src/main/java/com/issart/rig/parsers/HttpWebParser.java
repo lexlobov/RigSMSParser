@@ -10,7 +10,11 @@ import java.util.List;
 
 public class HttpWebParser extends Parser {
 
-    public String getSmsForWeb(String phone) throws IOException {
+    public HttpWebParser(String phone) {
+        super(phone);
+    }
+    @Override
+    public String getCode() throws IOException {
         String html = getHtml(phone);
         if (html.equals("false")){
             System.out.println("Request wasn't successful");

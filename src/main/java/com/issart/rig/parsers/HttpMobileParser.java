@@ -1,7 +1,6 @@
 package com.issart.rig.parsers;
 
 import com.issart.rig.model.SmsCodeResult;
-import okhttp3.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +10,11 @@ import java.util.List;
 
 public class HttpMobileParser extends Parser {
 
-    public String getSmsForMobile(String phone) throws IOException {
+    public HttpMobileParser(String phone) {
+        super(phone);
+    }
+    @Override
+    public String getCode() throws IOException {
         String html = getHtml(phone);
         if (html.equals("false")){
             System.out.println("Request wasn't successful");

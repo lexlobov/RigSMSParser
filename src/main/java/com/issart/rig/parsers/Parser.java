@@ -8,9 +8,19 @@ import okhttp3.Response;
 import java.io.IOException;
 
 public class Parser {
+
+    protected String phone;
+
+    public Parser(String phone){
+        this.phone = phone;
+    }
+
+    public String getCode() throws IOException {
+        return "";
+    }
     protected String linkBuilder(String phoneNumber) {
         String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
-        return baseUrl + phoneNumber.replaceAll("\\s", "").replaceAll("[-()+ ]", "");
+        return baseUrl + phoneNumber.replaceAll("\\s", "").replaceAll("[-()+]", "");
     }
 
     protected String getHtml(String phone) throws IOException {
