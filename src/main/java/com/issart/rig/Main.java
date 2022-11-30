@@ -12,10 +12,23 @@ import java.io.Writer;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         try {
-            if (args[1].equals("stripe")) getCode(new HttpStripeParser(args[0]));
-            else if (args[1].equals("rig")) getCode(new HttpMobileParser(args[0]));
-            else getCode(new HttpMobileParser(args[0]));
+            String number = args[0];
+            String service = args[1];
+            switch (service) {
+                case "stripe": {
+                    getCode(new HttpStripeParser(number));
+                    break;
+                }
+                case "rig": {
+                    getCode(new HttpMobileParser(number));
+                    break;
+                }
+                default: {
+                    getCode(new HttpMobileParser(number));
+                }
+            }
         } catch (IndexOutOfBoundsException e){
             try {
                 getCode(new HttpMobileParser(args[0]));
@@ -31,6 +44,5 @@ public class Main {
         try (Writer writer = new FileWriter(file)) {
             writer.write(jsonResult);
         }
-
     }
 }

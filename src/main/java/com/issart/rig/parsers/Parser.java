@@ -7,7 +7,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 
-public class Parser {
+public abstract class Parser {
 
     protected String phone;
 
@@ -15,9 +15,7 @@ public class Parser {
         this.phone = phone;
     }
 
-    public String getCode() throws IOException {
-        return "";
-    }
+    public abstract String getCode() throws IOException;
     protected String linkBuilder(String phoneNumber) {
         String baseUrl = "https://receive-sms.cc/US-Phone-Number/";
         return baseUrl + phoneNumber.replaceAll("\\s", "").replaceAll("[-()+]", "");
